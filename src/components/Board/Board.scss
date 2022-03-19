@@ -1,0 +1,10 @@
+.board {
+  width: 100%;
+
+  &__columns {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+  }
+}

@@ -1,58 +1,54 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import { FC, useEffect, lazy, Suspense } from 'react';
+import {
+  Routes,
+  Route,
+  Navigate
+} from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from './hooks/redux';
+import { getLaunches } from './store/actions';
+import { Reducer } from './store/store';
+import Container from '@mui/material/Container';
+import MainPage from './pages/Main';
+import { Header } from './components';
+import { AppRoute } from './const';
 
-function App() {
+const Details = lazy(() => import('./pages/Details'));
+
+const App: FC = () => {
+  const dispatch = useAppDispatch();
+  const isLoaded = useAppSelector((state) => state[Reducer.Launches].isLoaded);
+
+  useEffect(() => {
+    if (!isLoaded) {
+      dispatch(getLaunches());
+    }
+  }, [isLoaded]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <>
+      <Header />
+      <Container>
+        <Routes>
+          <Route
+            path={AppRoute.Main}
+            element={<MainPage />}
+          />
+          <Route
+            path={AppRoute.Details}
+            element={
+              <Suspense fallback={<div style={{ color: '#fff', padding: '2rem 0' }}>Loading...</div>}>
+                <Details />
+              </Suspense>
+            }
+          />
+          <Route
+            path="*"
+            element={<Navigate to={AppRoute.Main} />}
+          />
+        </Routes>
+      </Container>
+    </>
   );
-}
+};
 
 export default App;
