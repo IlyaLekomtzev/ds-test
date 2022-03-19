@@ -22,7 +22,7 @@ const App: FC = () => {
     if (!isLoaded) {
       dispatch(getLaunches());
     }
-  }, [isLoaded]);
+  }, [isLoaded, dispatch]);
 
   return (
     <>

@@ -16,7 +16,7 @@ const Board: FC = () => {
     const onDragEnd = useCallback((result: any) => {
         const { destination, source, draggableId } = result;
         dispatch(changeStatus(source.droppableId, destination.droppableId, draggableId));
-    }, []);
+    }, [dispatch]);
 
     const renderColumns = () => {
         if (isLoading) {
