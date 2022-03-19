@@ -24,7 +24,7 @@ const CardLaunch: FC<CardLaunchPropsTypes> = ({ column, item, index }) => {
                         ...provided.draggableProps.style
                     }}
                 >
-                    <Link to={`/launch/${column.type}/${item.id}`}>
+                    <Link to={`/launch/${column.type}/${item.id}`} className="card-link">
                         <Card>
                             <CardContent>
                                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>

@@ -14,8 +14,9 @@ const DetailsInfo: FC<ILaunch> = ({ id, name, details, date_unix, ...props }) =>
                 backgroundColor: 'grey.50',
                 borderRadius: '10px'
             }}
+            className="details-info"
         >
-            <Breadcrumbs aria-label="breadcrumb">
+            <Breadcrumbs aria-label="breadcrumb" className="details-info__breadcrumb">
                 <Link to={AppRoute.Main} style={{ color: 'grey' }}>Home</Link>
                 <Typography color="text.primary">{name}</Typography>
             </Breadcrumbs>
